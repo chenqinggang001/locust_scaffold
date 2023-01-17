@@ -1,0 +1,72 @@
+version: "2.3"
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    hostname: prometheus
+    restart: always
+    privileged: true
+    volumes:
+      - /prometheus/prometheus/config:/etc/prometheus
+      - /prometheus/prometheus/data:/prometheus
+      - /etc/localtime:/etc/localtime
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=15d'
+      - '--query.max-concurrency=50'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    depends_on:
+      - influxdb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    networks:
+      - prom_monitor
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    hostname: influxdb
+    restart: always
+    volumes:
+      - /prometheus/prometheus/influxdb/config:/etc/influxdb
+      - /prometheus/prometheus/influxdb/data:/var/lib/influxdb/data
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+    environment:
+      - INFLUXDB_DB=prometheus
+      - INFLUXDB_ADMIN_ENABLED=true
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=adminpwd
+      - INFLUXDB_USER=prometheus
+      - INFLUXDB_USER_PASSWORD=prometheuspwd
+      - INFLUXDB_CONFIG_PATH=/etc/influxdb/influxdb.conf
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    networks:
+      - prom_monitor
+  locust_master:
+    image: chenqinggang/locust:v1
+    container_name: locust_master
+    hostname: locust_master
+    restart: always
+    volumes:
+      - /home/locustperf/locust_demo:/mytest/locust
+    ports:
+      - "${WEB_PROT}:8089"
+      - "${MASTER_PROT}:5557"
+    networks:
+      - prom_monitor
+    command: locust --master -f ${LOCUST_FILE_PATH} --host=${LOCUST_HOST}
+
+networks:
+  prom_monitor:
+    driver: bridge
