@@ -5,5 +5,4 @@ services:
     image: mylocust:latest
     volumes:
       - ./:/mnt/locust
-    container_name: locust_worker
     command: --worker --master-host=${LOCUST_HOST} -f ${LOCUST_FILE_PATH}
