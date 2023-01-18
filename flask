@@ -1,0 +1,6 @@
+FROM python:3.10-slim
+WORKDIR /home/flask
+ADD . .
+ENV TZ=Asia/Shanghai
+ENV PYTHONPATH "${PYTHONPATH}:/home/flask"
+RUN pip install flask -i https://mirrors.aliyun.com/pypi/simple/

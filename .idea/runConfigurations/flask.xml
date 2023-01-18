@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="flask" type="docker-deploy" factoryName="dockerfile" server-name="110">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="imageTag" value="myflask:latest" />
+        <option name="sourceFilePath" value="flask" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>
