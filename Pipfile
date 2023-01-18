@@ -5,8 +5,9 @@ name = "pypi"
 
 [packages]
 prometheus-client = "*"
-locust = "*"
 redis = "*"
+locust = "==2.8.6"
+flask = "2.2.2"
 
 [dev-packages]
 

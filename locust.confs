@@ -1,0 +1,11 @@
+locustfile = .\locustfiles\stu\stu_start_exam.py
+# locustfile = .\locustfiles\stu\stu_login.py
+host = http://127.0.0.1:8000
+master = true
+skip-log-setup = true
+master-bind-host = 127.0.0.1
+# duration-time = 300
+# exam-time = 80
+users = 10
+# spawn-rate-count = 1
+exclude-tags = load

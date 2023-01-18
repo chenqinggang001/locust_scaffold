@@ -1,6 +1,6 @@
 import redis
 
-pool = redis.ConnectionPool(host='123.123.123.123', port=6379, password='password', db=0, decode_responses=True)
+pool = redis.ConnectionPool(host='125.124.53.188', port=6379, password='cqg123456!', db=0, decode_responses=True)
 redis_store = redis.Redis(connection_pool=pool, decode_responses=True)
 
 
