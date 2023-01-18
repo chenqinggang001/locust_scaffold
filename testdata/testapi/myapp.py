@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from testdata.testapi import res_json
+import res_json
 
 app = Flask(__name__)
 username_list = ["teststu1", "teststu2", "teststu3", "teststu4",
@@ -38,4 +38,4 @@ def exam_info():
 
 
 if __name__ == '__main__':
-    app.run('127.0.0.1', port=8000, debug=True)
+    app.run('0.0.0.0', port=8000, debug=True)

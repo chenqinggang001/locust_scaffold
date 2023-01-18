@@ -55,5 +55,4 @@ class StuLoadExam(SequentialTaskSet):
 class StuLoadExamUser(FastHttpUser):
     host = 'http://127.0.0.1:8000'
     wait_time = between(0.1, 0.3)
-
     tasks = [StuLoadExam]

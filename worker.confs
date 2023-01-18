@@ -1,5 +1,5 @@
-locustfile = .\locustfiles\stu\stu_start_exam.py
-# locustfile = .\locustfiles\stu\stu_login.py
+# locustfile = .\locustfiles\stu\stu_start_exam.py
+locustfile = ./locustfiles/stu/stu_login.py
 host = http://127.0.0.1:8000
 worker = true
 # skip-log-setup = true

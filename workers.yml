@@ -2,8 +2,8 @@ version: '3'
 
 services:
   locust_worker:
-    image: chenqinggang/locust:v1
+    image: mylocust:latest
     volumes:
-      - /home/locustperf/locus_demo:/mytest/locust
+      - ./:/mnt/locust
     container_name: locust_worker
-    command: locust --worker --master-host=${LOCUST_HOST}:${MASTER_PROT} -f ${LOCUST_FILE_PATH}
+    command: --worker --master-host=${LOCUST_HOST} -f ${LOCUST_FILE_PATH}

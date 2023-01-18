@@ -8,8 +8,8 @@ services:
     restart: always
     privileged: true
     volumes:
-      - /prometheus/prometheus/config:/etc/prometheus
-      - /prometheus/prometheus/data:/prometheus
+      - /data/prometheus/config:/etc/prometheus
+      - /data/prometheus/data:/prometheus
       - /etc/localtime:/etc/localtime
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -33,8 +33,8 @@ services:
     hostname: influxdb
     restart: always
     volumes:
-      - /prometheus/prometheus/influxdb/config:/etc/influxdb
-      - /prometheus/prometheus/influxdb/data:/var/lib/influxdb/data
+      - /data/influxdb/config:/etc/influxdb
+      - /data/influxdb/data:/var/lib/influxdb/data
       - /etc/localtime:/etc/localtime
     ports:
       - "8086:8086"
@@ -54,18 +54,18 @@ services:
     networks:
       - prom_monitor
   locust_master:
-    image: chenqinggang/locust:v1
+    image: mylocust:latest
     container_name: locust_master
     hostname: locust_master
     restart: always
     volumes:
-      - /home/locustperf/locust_demo:/mytest/locust
+      - ./:/mnt/locust
     ports:
       - "${WEB_PROT}:8089"
       - "${MASTER_PROT}:5557"
     networks:
       - prom_monitor
-    command: locust --master -f ${LOCUST_FILE_PATH} --host=${LOCUST_HOST}
+    command: --master -f ${LOCUST_FILE_PATH} --host=${LOCUST_HOST}
 
 networks:
   prom_monitor:
