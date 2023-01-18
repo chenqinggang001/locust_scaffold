@@ -3,7 +3,6 @@ locustfile = ./locustfiles/stu/stu_login.py
 host = http://127.0.0.1:8000
 worker = true
 # skip-log-setup = true
-master-host = 127.0.0.1
 # duration-time = 300
 # exam-time = 80
 # # users = 10

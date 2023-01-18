@@ -65,7 +65,8 @@ services:
       - "${MASTER_PROT}:5557"
     networks:
       - prom_monitor
-    command: --master -f ${LOCUST_FILE_PATH} --host=${LOCUST_HOST}
+    # 如果不希望暴露公网,可以用局域网IP
+    command: --master -f ${LOCUST_FILE_PATH} --host=0.0.0.0
 
   worker:
     image: mylocust:latest
@@ -91,7 +92,7 @@ services:
 
   redis:
     image: redis:${REDIS_VERSION}
-    container_name: redis_${REDIS_VERSION}
+    container_name: redis
     ports:
       - ${REAL_REDIS_PORT}:6379
     volumes:

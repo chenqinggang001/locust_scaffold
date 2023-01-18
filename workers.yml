@@ -1,8 +1,0 @@
-version: '3'
-
-services:
-  locust_worker:
-    image: mylocust:latest
-    volumes:
-      - ./:/mnt/locust
-    command: --worker --master-host=${LOCUST_HOST} -f ${LOCUST_FILE_PATH}
