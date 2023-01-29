@@ -63,13 +63,19 @@ services:
     ports:
       - "${WEB_PROT}:8089"
       - "${MASTER_PROT}:5557"
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
     networks:
       - prom_monitor
     # 如果不希望暴露公网,可以用局域网IP
-    command: --master -f ${LOCUST_FILE_PATH} --host=0.0.0.0
+    command: --master -f ${LOCUST_FILE_PATH} --host=${LOCUST_MASTER_HOST}
 
   worker:
     image: mylocust:latest
+    depends_on:
+      - master
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
     volumes:
       - ./:/mnt/locust
     networks:
