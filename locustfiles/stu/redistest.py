@@ -29,8 +29,6 @@ class RedisTestUser(FastHttpUser):
     wait_time = between(1, 3)
     host = "https://www.baidu.com"
 
-    # pool = redis.ConnectionPool(host='123.123.123.123', port=6379, password='password', db=0)
-    # redis_store = redis.Redis(connection_pool=pool, decode_responses=True)
     def __init__(self, parent):
         self.username = usernames.pop()
         super().__init__(parent)

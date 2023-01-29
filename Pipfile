@@ -1,13 +1,13 @@
 [[source]]
-url = "https://pypi.org/simple"
+url = "https://mirrors.aliyun.com/pypi/simple/"
 verify_ssl = true
 name = "pypi"
 
 [packages]
-prometheus-client = "*"
-redis = "*"
-locust = "==2.8.6"
-flask = "2.2.2"
+prometheus-client = "==0.16.0"
+redis = "==4.4.2"
+locust = "==2.14.2"
+flask = "==2.2.2"
 
 [dev-packages]
 
