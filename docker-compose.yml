@@ -1,0 +1,119 @@
+version: "2.3"
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    hostname: prometheus
+    restart: always
+    privileged: true
+    volumes:
+      - ./testdata/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /data/prometheus/data:/prometheus
+      - /etc/localtime:/etc/localtime
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=15d'
+      - '--query.max-concurrency=50'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    depends_on:
+      - influxdb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    networks:
+      - prom_monitor
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    hostname: influxdb
+    restart: always
+    volumes:
+      - /data/influxdb/config:/etc/influxdb
+      - /data/influxdb/data:/var/lib/influxdb/data
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+    environment:
+      - INFLUXDB_DB=prometheus
+      - INFLUXDB_ADMIN_ENABLED=true
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=adminpwd
+      - INFLUXDB_USER=prometheus
+      - INFLUXDB_USER_PASSWORD=prometheuspwd
+      - INFLUXDB_CONFIG_PATH=/etc/influxdb/influxdb.conf
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    networks:
+      - prom_monitor
+  master:
+    image: mylocust:latest
+    container_name: locust_master
+    hostname: locust_master
+    restart: always
+    volumes:
+      - ./:/mnt/locust
+    ports:
+      - "${WEB_PROT}:8089"
+      - "${MASTER_PROT}:5557"
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+    networks:
+      - prom_monitor
+    # 如果不希望暴露公网,可以用局域网IP
+    command: --master -f ${LOCUST_FILE_PATH} --host=${LOCUST_MASTER_HOST}
+
+  worker:
+    image: mylocust:latest
+    depends_on:
+      - master
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+    volumes:
+      - ./:/mnt/locust
+    networks:
+      - prom_monitor
+    command: --worker --master-host=${LOCUST_HOST} -f ${LOCUST_FILE_PATH}
+
+  flask:
+    image: myflask:latest
+    container_name: flask
+    restart: always
+    ports:
+      - "8000:8000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    networks:
+      - prom_monitor
+    command: [ "python", "/home/flask/testdata/testapi/myapp.py" ]
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    container_name: redis
+    ports:
+      - ${REAL_REDIS_PORT}:6379
+    volumes:
+      - ${REDIS_DIR}/data:/data
+      - ${REDIS_DIR}/redis.conf:/etc/redis/redis.conf
+      - ${REDIS_DIR}/logs:/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "300m"
+        max-file: "3"
+    restart: always
+    command: [ "redis-server", "/etc/redis/redis.conf", "--appendonly yes", "--requirepass ${REDIS_PASSWORD}" ]
+
+
+networks:
+  prom_monitor:
+    driver: bridge

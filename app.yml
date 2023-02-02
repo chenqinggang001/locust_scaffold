@@ -1,0 +1,29 @@
+version: "3"
+services:
+    flask:
+        image: myflask:latest
+        container_name: flask
+        restart: always
+        ports:
+            - "8000:8000"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "1g"
+        command: ["python", "/home/flask/testdata/testapi/myapp.py"]
+    redis:
+        image: redis:${REDIS_VERSION}
+        container_name: redis_${REDIS_VERSION}
+        ports:
+            - ${REAL_REDIS_PORT}:6379
+        volumes:
+            - ${REDIS_DIR}/data:/data
+            - ${REDIS_DIR}/redis.conf:/etc/redis/redis.conf
+            - ${REDIS_DIR}/logs:/logs
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "300m"
+                max-file: "3"
+        restart: always
+        command: ["redis-server", "/etc/redis/redis.conf", "--appendonly yes", "--requirepass ${REDIS_PASSWORD}"]
