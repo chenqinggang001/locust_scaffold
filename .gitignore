@@ -3,3 +3,4 @@ __pycache__/*
 .python-versions
 log/*
 reports/*
+.env
