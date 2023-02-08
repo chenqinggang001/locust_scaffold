@@ -1,3 +1,5 @@
+# 打包镜像
+docker build -t mylocust .
 # 启动前先授予/data/locust目录权限
 chmod -R 777 /data/locust
 # 启动命令示例

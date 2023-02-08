@@ -9,8 +9,8 @@ services:
     privileged: true
     volumes:
       - ./testdata/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - /data/prometheus/data:/prometheus
-      - /etc/localtime:/etc/localtime
+      - ./testdata/prometheus/data:/prometheus
+      # - /etc/localtime:/etc/localtime
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -19,6 +19,8 @@ services:
       - '--web.enable-lifecycle'
     ports:
       - "9090:9090"
+    environment:
+      - TZ=Asia/Shanghai
     depends_on:
       - influxdb
     logging:
@@ -33,13 +35,13 @@ services:
     hostname: influxdb
     restart: always
     volumes:
-      - /data/influxdb/config:/etc/influxdb
-      - /data/influxdb/data:/var/lib/influxdb/data
-      - /etc/localtime:/etc/localtime
+      - ./testdata/influxdb/config:/etc/influxdb
+      - ./testdata/influxdb/data:/var/lib/influxdb/data
     ports:
       - "8086:8086"
       - "8083:8083"
     environment:
+      - TZ=Asia/Shanghai
       - INFLUXDB_DB=prometheus
       - INFLUXDB_ADMIN_ENABLED=true
       - INFLUXDB_ADMIN_USER=admin
@@ -65,6 +67,7 @@ services:
       - "${MASTER_PROT}:5557"
     environment:
       - REDIS_HOST=${REDIS_HOST}
+      - TZ=Asia/Shanghai
     networks:
       - prom_monitor
     # 如果不希望暴露公网,可以用局域网IP
@@ -76,6 +79,7 @@ services:
       - master
     environment:
       - REDIS_HOST=${REDIS_HOST}
+      - TZ=Asia/Shanghai
     volumes:
       - ./:/mnt/locust
     networks:
@@ -94,6 +98,8 @@ services:
         max-size: "1g"
     networks:
       - prom_monitor
+    environment:
+      - TZ=Asia/Shanghai
     command: [ "python", "/home/flask/testdata/testapi/myapp.py" ]
 
   redis:
@@ -105,6 +111,8 @@ services:
       - ${REDIS_DIR}/data:/data
       - ${REDIS_DIR}/redis.conf:/etc/redis/redis.conf
       - ${REDIS_DIR}/logs:/logs
+    environment:
+      - TZ=Asia/Shanghai
     logging:
       driver: "json-file"
       options:
