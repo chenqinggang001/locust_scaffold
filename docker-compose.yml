@@ -108,9 +108,9 @@ services:
     ports:
       - ${REAL_REDIS_PORT}:6379
     volumes:
-      - ${REDIS_DIR}/data:/data
-      - ${REDIS_DIR}/redis.conf:/etc/redis/redis.conf
-      - ${REDIS_DIR}/logs:/logs
+      - ./testdata/redis/data:/data
+      - ./testdata/redis/redis.conf:/etc/redis/redis.conf
+      - ./testdata/redis/logs:/logs
     environment:
       - TZ=Asia/Shanghai
     logging:
