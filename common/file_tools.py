@@ -3,7 +3,7 @@
 import os
 import queue
 
-from common.path import testdata_path
+from common.mypath import testdata_path
 
 
 def read_text_on_quqe(parent_path, file_name):

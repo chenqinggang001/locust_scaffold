@@ -18,7 +18,7 @@ from prometheus_client import Metric, REGISTRY, exposition
 
 from common.file_tools import read_text_line
 from common.logger_handler import get_logger
-from common.path import reports_path
+from common.mypath import reports_path
 
 usernames = []
 usernames_queue = queue.Queue()

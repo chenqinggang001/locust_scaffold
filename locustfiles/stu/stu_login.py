@@ -6,7 +6,7 @@ from common.redis_store import redis_store
 from common.prometheus_exporter import *
 
 
-logger = get_logger('chenqg', file=True)
+logger = get_logger('chenqg')
 
 
 class StuLogin(SequentialTaskSet):

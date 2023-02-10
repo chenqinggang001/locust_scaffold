@@ -3,7 +3,7 @@ from common.logger_handler import get_logger
 from common.prometheus_exporter import usernames
 from common.redis_store import redis_store
 
-logger = get_logger('chenqg', file=True)
+logger = get_logger('chenqg')
 
 
 class RedisTest(SequentialTaskSet):

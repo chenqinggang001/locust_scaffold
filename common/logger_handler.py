@@ -6,13 +6,12 @@ import os
 # o_path = os.getcwd()
 # sys.path.append(o_path)
 import logging
-from common.path import log_path
-
+from common.mypath import log_path
 
 
 def get_logger(name='root',
-               logger_level='DEBUG',
-               stream_handler_level='DEBUG',
+               logger_level='INFO',
+               stream_handler_level='INFO',
                file=False,
                file_handler_level='INFO',
                off=True,
@@ -27,9 +26,7 @@ def get_logger(name='root',
     fmt = logging.Formatter(fmt_str)
     # 日志处理器
     handler = logging.StreamHandler()
-    handler.setLevel(stream_handler_level)
-    logger.addHandler(handler)
-    handler.setFormatter(fmt)
+    _extracted_from_get_logger_28(handler, stream_handler_level, logger, fmt)
     logger.removeHandler(handler)
     # 日志文件处理
     if file:
@@ -37,21 +34,26 @@ def get_logger(name='root',
         file_name = f'{current_time}.log'
         file_path = os.path.join(log_path, file_name)
         file_handler = logging.FileHandler(file_path, encoding="utf-8")
-        file_handler.setLevel(file_handler_level)
-        logger.addHandler(file_handler)
-        file_handler.setFormatter(fmt)
+        _extracted_from_get_logger_28(file_handler, file_handler_level, logger, fmt)
     return logger
+
+
+# TODO Rename this here and in `get_logger`
+def _extracted_from_get_logger_28(arg0, arg1, logger, fmt):
+    arg0.setLevel(arg1)
+    logger.addHandler(arg0)
+    arg0.setFormatter(fmt)
 
 
 if __name__ == '__main__':
     current_time = datetime.now().strftime("%Y-%m-%d %H.%M.%S")
     file_name = f'{current_time}.log'
     file_path = os.path.join(log_path, file_name)
-    logger = get_logger('chenqg',file=file_path)
     log = get_logger('chenqg')
+    log.info("这里有一个bug")
+    log.warning('这里有一个警告信息')
+    log.error('这里有一个错误')
+    logger = get_logger('chenqg', file=file_path)
     logger.info("这里有一个bug")
     logger.warning('这里有一个警告信息')
     logger.error('这里有一个错误')
-
-
-

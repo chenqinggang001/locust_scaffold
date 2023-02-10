@@ -3,7 +3,7 @@ from locust import task, between, SequentialTaskSet, FastHttpUser
 from common.prometheus_exporter import *
 from common.redis_store import redis_store
 
-logger = get_logger('chenqg', file=True)
+logger = get_logger('chenqg')
 
 
 class StuLoadExam(SequentialTaskSet):
