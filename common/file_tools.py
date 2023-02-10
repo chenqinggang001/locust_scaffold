@@ -13,8 +13,6 @@ def read_text_on_quqe(parent_path, file_name):
         # 创建一个队列
         s = queue.Queue()
         while True:
-            # if f.readline().strip("\n"):
-            #     s.put_nowait(f.readline().strip("\n"))
             if line := f.readline().strip("\n"):
                 s.put_nowait(line)
             else:
@@ -30,8 +28,6 @@ def read_text_line(parent_path: str, file_path: str):
         while True:
             if line := f.readline().strip("\n"):
                 s.append(line)
-            # if f.readline().strip("\n"):
-            #     s.append(f.readline().strip("\n"))
             else:
                 break
     return s

@@ -38,8 +38,7 @@ class StuLogin(SequentialTaskSet):
         usernames_queue.put({"username": username})
 
 
-class LoginUser(FastHttpUser):
+class StuLoginUser(FastHttpUser):
     wait_time = between(1, 2)
-    host = "http://127.0.0.1:8000"
-
+    host = "http://192.168.10.181:8000"
     tasks = [StuLogin]

@@ -4,3 +4,7 @@ __pycache__/*
 log/*
 reports/*
 .env
+testdata/grafana
+testdata/prometheus/data
+testdata/redis
+testdata/influxdb

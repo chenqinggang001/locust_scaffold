@@ -43,17 +43,15 @@ def get_logger(name='root',
     return logger
 
 
-# current_time = datetime.now().strftime("%Y-%m-%d %H.%M.%S")
-# file_name = f'{current_time}.log'
-# file_path = os.path.join(log_path, file_name)
-# #
-# logger = get_logger('chenqg',file=file_path)
-#
-# if __name__ == '__main__':
-#     log = get_logger('chenqg')
-#     logger.info("这里有一个bug")
-#     logger.warning('这里有一个警告信息')
-#     logger.error('这里有一个错误')
+if __name__ == '__main__':
+    current_time = datetime.now().strftime("%Y-%m-%d %H.%M.%S")
+    file_name = f'{current_time}.log'
+    file_path = os.path.join(log_path, file_name)
+    logger = get_logger('chenqg',file=file_path)
+    log = get_logger('chenqg')
+    logger.info("这里有一个bug")
+    logger.warning('这里有一个警告信息')
+    logger.error('这里有一个错误')
 
 
 

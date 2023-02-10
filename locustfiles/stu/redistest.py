@@ -27,7 +27,7 @@ class RedisTest(SequentialTaskSet):
 
 class RedisTestUser(FastHttpUser):
     wait_time = between(1, 3)
-    host = "https://www.baidu.com"
+    host = "http://192.168.10.181:8000"
 
     def __init__(self, parent):
         self.username = usernames.pop()

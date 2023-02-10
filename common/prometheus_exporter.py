@@ -259,7 +259,7 @@ def on_test_start(environment, **_kwargs):
     if isinstance(environment.runner, WorkerRunner):
         return
     # 用户文件路径，读取用户名
-    res = read_text_line("app", "app_users")
+    res = read_text_line("appuser", "app_users")
     users = [{"name": res[i]} for i in range(len(res))]
     worker_count = environment.runner.worker_count
     # 根据worker数量计算每个worker需要的数据大小

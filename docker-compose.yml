@@ -55,6 +55,25 @@ services:
         max-size: "1g"
     networks:
       - prom_monitor
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    volumes:
+      - ./testdata/grafana/data:/var/lib/grafana
+      - ./testdata/grafana/provisioning:/etc/grafana/provisioning
+      - ./testdata/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3000:3000"
+    environment:
+      - TZ=Asia/Shanghai
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    networks:
+      - prom_monitor
   master:
     image: mylocust:latest
     container_name: locust_master
@@ -71,7 +90,7 @@ services:
     networks:
       - prom_monitor
     # 如果不希望暴露公网,可以用局域网IP
-    command: --master -f ${LOCUST_FILE_PATH} --host=${LOCUST_MASTER_HOST}
+    command: --master -f ${LOCUST_FILE_PATH} --master-bind-host=${LOCUST_MASTER_HOST}
 
   worker:
     image: mylocust:latest

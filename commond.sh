@@ -11,3 +11,5 @@ docker-compose down
 docker-compose up -d --scale worker=3 worker
 # grafana容器部署命令
 docker run -d -p 3000:3000 --name grafana grafana/grafana
+# 本地调试单独启动启动flask应用
+docker-compose -f app.yml up -d
