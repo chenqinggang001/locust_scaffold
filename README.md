@@ -74,8 +74,16 @@ REDIS_PASSWORD=rdspwd123456!
 
 #### 4、启动集群
 
+启动loucst-master、loucst-worker、prometheus、influxdb、grafana、flask、redis
+
 ```
 docker-compose up -d
+```
+
+分布式模式下，施压机器单独启动worker，cpu有多少个核心就启动多少个worker
+
+```
+docker-compose up -d --scale worker=3 worker
 ```
 
 
