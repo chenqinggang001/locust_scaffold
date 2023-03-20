@@ -1,3 +1,4 @@
+# 示例命令
 # 打包镜像
 docker build -t mylocust .
 # 启动前先授予/data/locust目录权限
