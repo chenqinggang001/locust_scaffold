@@ -75,7 +75,7 @@ services:
     networks:
       - prom_monitor
   master:
-    image: mylocust:latest
+    image: ${CONTAINER_NAME}
     container_name: locust_master
     hostname: locust_master
     restart: always
@@ -93,7 +93,7 @@ services:
     command: --master -f ${LOCUST_FILE_PATH} --master-bind-host=${LOCUST_MASTER_HOST}
 
   worker:
-    image: mylocust:latest
+    image: ${CONTAINER_NAME}
     depends_on:
       - master
     environment:
@@ -106,7 +106,7 @@ services:
     command: --worker --master-host=${LOCUST_HOST} -f ${LOCUST_FILE_PATH}
 
   flask:
-    image: myflask:latest
+    image: ${FLASK_APP}
     container_name: flask
     restart: always
     ports:

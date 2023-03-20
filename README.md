@@ -12,8 +12,6 @@
 
 4、locust监控配置、跨节点通信、自定义参数、redis存储测试数据等示例代码参考
 
-
-
 ### 快速开始
 
 > 前置条件：已安装docker、docker-compose
@@ -27,6 +25,8 @@ git clone https://github.com/chenqinggang001/locust_scaffold.git
 ```
 cd locust_scaffold
 ```
+
+> 注意：可能会遇到没有权限的问题，需要给目录授权 `chmod -R 777 /your/path/locust_scaffold`
 
 #### 2、build镜像
 
@@ -49,6 +49,7 @@ docker pull chenqinggang/flask
 #### 3、编辑.env配置文件
 
 ```yaml
+# git update-index --assume-unchanged .env
 # locust脚本文件路径
 LOCUST_FILE_PATH=/mnt/locust/locustfiles/stu/stu_login.py
 # 主机的IP地址,用于从机绑定主机,分布式情况下需要用主机的局域网或者公网IP
@@ -59,6 +60,10 @@ LOCUST_MASTER_HOST=0.0.0.0
 WEB_PROT=8089
 # locust master监听端口
 MASTER_PROT=5557
+# locust容器名称，默认为mylocust:latest，即构建镜像时的镜像名称
+CONTAINER_NAME=mylocust:latest
+# flask应用容器名称
+FLASK_APP=myflask:latest
 
 
 # redis配置,可以单独部署一个redis服务器,单独部署后修改redis_store.py文件中的配置即可
@@ -86,53 +91,4 @@ docker-compose up -d
 docker-compose up -d --scale worker=3 worker
 ```
 
-
-
-#### 配置grafana监控
-
-#### 1、访问grafana
-
-> 初始账号：admin  密码：admin
-
-```
-# 上面.env中配置的ip地址+端口号访问
-http://192.168.10.181:3000/
-```
-
-#### 2、配置prometheus数据源
-
-点击添加数据源
-
-![image-20230210175242636](./testdata/imgs/image-20230210174054504.png)
-
-选择Prometheus，设置Prometheus地址，并保存
-
-![image-20230210175310510](./testdata/imgs/image-20230210174230165.png)
-
-![image-20230210175315168](./testdata/imgs/image-20230210174301373.png)
-
-导入模板，输入模板ID，点击导入，设置Prometheus数据源，导入模板
-
-![image-20230210175321252](./testdata/imgs/image-20230210174339243.png)
-
-![image-20230210175326107](./testdata/imgs/image-20230210174438754.png)
-
-![image-20230210175331609](./testdata/imgs/image-20230210174635240.png)
-
-#### 3、运行locust查看监控
-
-访问locust
-
-```
-http://192.168.10.181:8089/
-```
-
-启动测试
-
-![image-20230210175337890](./testdata/imgs/image-20230210174902793.png)
-
-![](./testdata/imgs/image-20230210174914705.png)
-
-查看监控
-
-![image-20230210175348978](./testdata/imgs/image-20230210175059193.png)
+#### 配置grafana监控参考：[prometheus + influxdb + grafana 配置locust监控](https://blog.csdn.net/qq_41522024/article/details/128997655)
