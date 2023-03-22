@@ -7,4 +7,5 @@ reports/*
 testdata/grafana/*
 testdata/prometheus/data/*
 testdata/redis/*
-testdata/influxdb/*
+testdata/influxdb/config/*
+testdata/influxdb/data/*
