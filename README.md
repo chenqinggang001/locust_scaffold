@@ -1,16 +1,6 @@
+
+
 # docker-compose快速启动locust集群
-
-### 简介
-
-这是一个locust脚手架项目，有以下这些内容：
-
-1、通过docker一键部署locust集群
-
-2、prometheus、influxdb、grafana性能测试结果监控
-
-3、可供练习的测试接口
-
-4、locust监控配置、跨节点通信、自定义参数、redis存储测试数据等示例代码参考
 
 ### 快速开始
 
@@ -26,7 +16,7 @@ git clone https://github.com/chenqinggang001/locust_scaffold.git
 cd locust_scaffold
 ```
 
-> 注意：可能会遇到没有权限的问题，需要给目录授权 `chmod -R 777 /your/path/locust_scaffold`
+> 注意：可能会遇到没有权限的问题，需要给目录授权 `chmod 777 -R $PWD`
 
 #### 2、build镜像
 
@@ -34,8 +24,10 @@ cd locust_scaffold
 # locust镜像
 docker build -t mylocust . 
 # flask镜像
-docker build -f .\flask -t myflask .
+docker build -f ./flask -t myflask .
 ```
+
+> 注：如果需要更依赖执行 ``pipenv requirements > requirements.txt``，然后重新build镜像
 
 或者也可以直接pull镜像
 
@@ -49,32 +41,29 @@ docker pull chenqinggang/flask
 #### 3、编辑.env配置文件
 
 ```yaml
-# git update-index --assume-unchanged .env
 # locust脚本文件路径
+# 注意!!!: 这是在docker容器中的路径,容器中所在工作路径是/mnt/locust,即当前目录映射在/mnt/locust
 LOCUST_FILE_PATH=/mnt/locust/locustfiles/stu/stu_login.py
 # 主机的IP地址,用于从机绑定主机,分布式情况下需要用主机的局域网或者公网IP
-LOCUST_HOST=192.168.10.181
-# 主机暴露的地址,0.0.0.0表示所有地址都可以访问
+LOCUST_HOST=110.42.182.87
+# 主机暴露的地址,0.0.0.0表示公网/局域网地址都可以访问
 LOCUST_MASTER_HOST=0.0.0.0
-# locust的web页面端口
+# 不建议改端口,改了还得去docker-compose.yml改启动命令
 WEB_PROT=8089
-# locust master监听端口
 MASTER_PROT=5557
-# locust容器名称，默认为mylocust:latest，即构建镜像时的镜像名称
-CONTAINER_NAME=mylocust:latest
-# flask应用容器名称
-FLASK_APP=myflask:latest
+CONTAINER_NAME=mylocust
+FLASK_APP=myflask
+FLASK_APP_HOST=110.42.182.87
 
 
 # redis配置,可以单独部署一个redis服务器,单独部署后修改redis_store.py文件中的配置即可
-# redis版本号
 REDIS_VERSION=7.0.7
-# redis主机地址
-REDIS_HOST=192.168.10.181
-# redis端口号
+# your redis host
+REDIS_HOST=110.42.182.87
+REDIS_DIR=/data/redis
 REAL_REDIS_PORT=6379
-# redis密码
-REDIS_PASSWORD=rdspwd123456!
+# your redis password
+REDIS_PASSWORD=yourredispwd
 ```
 
 #### 4、启动集群
