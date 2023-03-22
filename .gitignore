@@ -14,3 +14,4 @@ testdata/influxdb/data/*
 !testdata/influxdb/config/.gitkeep
 !testdata/influxdb/data/.gitkeep
 !log/.gitkeep
+!reports/.gitkeep
