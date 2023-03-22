@@ -16,7 +16,11 @@ git clone https://github.com/chenqinggang001/locust_scaffold.git
 cd locust_scaffold
 ```
 
-> 注意：可能会遇到没有权限的问题，需要给目录授权 `chmod 777 -R $PWD`
+> 注意：可能会遇到没有权限的问题，需要给目录授权
+
+```
+chmod 777 -R $PWD
+```
 
 #### 2、build镜像
 
