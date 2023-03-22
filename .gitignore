@@ -11,6 +11,6 @@ testdata/influxdb/config/*
 testdata/influxdb/data/*
 
 !testdata/prometheus/data/.gitkeep
-testdata/influxdb/config/.gitkeep
-testdata/influxdb/data/.gitkeep
-log/.gitkeep
+!testdata/influxdb/config/.gitkeep
+!testdata/influxdb/data/.gitkeep
+!log/.gitkeep
