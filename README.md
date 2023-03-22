@@ -49,7 +49,7 @@ docker pull chenqinggang/flask
 # 注意!!!: 这是在docker容器中的路径,容器中所在工作路径是/mnt/locust,即当前目录映射在/mnt/locust
 LOCUST_FILE_PATH=/mnt/locust/locustfiles/stu/stu_login.py
 # 主机的IP地址,用于从机绑定主机,分布式情况下需要用主机的局域网或者公网IP
-LOCUST_HOST=110.42.182.87
+LOCUST_HOST=123.123.123.123
 # 主机暴露的地址,0.0.0.0表示公网/局域网地址都可以访问
 LOCUST_MASTER_HOST=0.0.0.0
 # 不建议改端口,改了还得去docker-compose.yml改启动命令
@@ -57,13 +57,13 @@ WEB_PROT=8089
 MASTER_PROT=5557
 CONTAINER_NAME=mylocust
 FLASK_APP=myflask
-FLASK_APP_HOST=110.42.182.87
+FLASK_APP_HOST=123.123.123.123
 
 
 # redis配置,可以单独部署一个redis服务器,单独部署后修改redis_store.py文件中的配置即可
 REDIS_VERSION=7.0.7
 # your redis host
-REDIS_HOST=110.42.182.87
+REDIS_HOST=123.123.123.123
 REDIS_DIR=/data/redis
 REAL_REDIS_PORT=6379
 # your redis password
