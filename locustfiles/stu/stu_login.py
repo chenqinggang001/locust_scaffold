@@ -40,5 +40,6 @@ class StuLogin(SequentialTaskSet):
 
 class StuLoginUser(FastHttpUser):
     wait_time = between(1, 2)
-    host = "http://192.168.10.181:8000"
+    flas_app_host = os.environ.get('FLASK_APP_HOST')
+    host = f"http://{flas_app_host}:8000"
     tasks = [StuLogin]

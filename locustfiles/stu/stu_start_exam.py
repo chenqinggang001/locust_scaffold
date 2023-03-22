@@ -53,6 +53,7 @@ class StuLoadExam(SequentialTaskSet):
 
 
 class StuLoadExamUser(FastHttpUser):
-    host = 'http://192.168.10.181:8000'
+    flas_app_host = os.environ.get('FLASK_APP_HOST')
+    host = f"http://{flas_app_host}:8000"
     wait_time = between(0.1, 0.3)
     tasks = [StuLoadExam]

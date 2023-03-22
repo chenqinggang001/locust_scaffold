@@ -1,3 +1,4 @@
+import os
 from locust import task, between, SequentialTaskSet, FastHttpUser
 from common.logger_handler import get_logger
 from common.prometheus_exporter import usernames
@@ -27,7 +28,8 @@ class RedisTest(SequentialTaskSet):
 
 class RedisTestUser(FastHttpUser):
     wait_time = between(1, 3)
-    host = "http://192.168.10.181:8000"
+    flas_app_host = os.environ.get('FLASK_APP_HOST')
+    host = f"http://{flas_app_host}:8000"
 
     def __init__(self, parent):
         self.username = usernames.pop()

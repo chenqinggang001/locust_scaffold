@@ -1,4 +1,4 @@
-version: "2.3"
+version: "3"
 
 services:
   prometheus:
@@ -86,6 +86,8 @@ services:
       - "${MASTER_PROT}:5557"
     environment:
       - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - FLASK_APP_HOST=${FLASK_APP_HOST}
       - TZ=Asia/Shanghai
     networks:
       - prom_monitor
@@ -98,6 +100,8 @@ services:
       - master
     environment:
       - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - FLASK_APP_HOST=${FLASK_APP_HOST}
       - TZ=Asia/Shanghai
     volumes:
       - ./:/mnt/locust
