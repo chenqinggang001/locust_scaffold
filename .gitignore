@@ -15,3 +15,7 @@ testdata/influxdb/data/*
 !testdata/influxdb/data/.gitkeep
 !log/.gitkeep
 !reports/.gitkeep
+!testdata/grafana/.gitkeep
+!testdata/grafana/dashboards/.gitkeep
+!testdata/grafana/provisioning/.gitkeep
+!testdata/grafana/data/.gitkeep

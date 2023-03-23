@@ -6,11 +6,9 @@ services:
     container_name: prometheus
     hostname: prometheus
     restart: always
-    privileged: true
     volumes:
       - ./testdata/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./testdata/prometheus/data:/prometheus
-      # - /etc/localtime:/etc/localtime
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -23,10 +21,6 @@ services:
       - TZ=Asia/Shanghai
     depends_on:
       - influxdb
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1g"
     networks:
       - prom_monitor
   influxdb:
@@ -49,10 +43,6 @@ services:
       - INFLUXDB_USER=prometheus
       - INFLUXDB_USER_PASSWORD=prometheuspwd
       - INFLUXDB_CONFIG_PATH=/etc/influxdb/influxdb.conf
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1g"
     networks:
       - prom_monitor
   grafana:
@@ -68,10 +58,6 @@ services:
       - "3000:3000"
     environment:
       - TZ=Asia/Shanghai
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1g"
     networks:
       - prom_monitor
   master:
@@ -96,8 +82,6 @@ services:
 
   worker:
     image: ${CONTAINER_NAME}
-    depends_on:
-      - master
     environment:
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
@@ -115,10 +99,6 @@ services:
     restart: always
     ports:
       - "8000:8000"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1g"
     networks:
       - prom_monitor
     environment:
@@ -136,11 +116,6 @@ services:
       - ./testdata/redis/logs:/logs
     environment:
       - TZ=Asia/Shanghai
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "300m"
-        max-file: "3"
     restart: always
     command: [ "redis-server", "/etc/redis/redis.conf", "--appendonly yes", "--requirepass ${REDIS_PASSWORD}" ]
 
