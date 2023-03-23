@@ -1,5 +1,3 @@
-
-
 # docker-compose快速启动locust集群
 
 ### 快速开始
@@ -28,7 +26,7 @@ chmod 777 -R $PWD
 # locust镜像
 docker build -t mylocust . 
 # flask镜像
-docker build -f ./flask -t myflask .
+docker build -f Flaskfile -t myflask .
 ```
 
 > 注：如果需要更依赖执行 ``pipenv requirements > requirements.txt``，然后重新build镜像
@@ -83,5 +81,25 @@ docker-compose up -d
 ```
 docker-compose up -d --scale worker=3 worker
 ```
+
+分布式时单独启动worker
+
+```
+docker-compose up -d --scale worker=3 worker
+```
+
+单独启动启动flask应用
+
+```
+docker-compose -f app.yml up -d
+```
+
+修改代码之后，重启容器
+
+```
+docker-compose restart
+```
+
+
 
 #### 配置grafana监控参考：[prometheus + influxdb + grafana 配置locust监控](https://blog.csdn.net/qq_41522024/article/details/128997655)
