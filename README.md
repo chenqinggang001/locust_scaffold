@@ -82,6 +82,12 @@ docker-compose up -d
 docker-compose up -d --scale worker=3 worker
 ```
 
+分布式时单独启动worker
+
+```
+docker-compose up -d --scale worker=3 worker
+```
+
 单独启动启动flask应用
 
 ```
