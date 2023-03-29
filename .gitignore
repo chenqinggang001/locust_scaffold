@@ -4,18 +4,19 @@ __pycache__/*
 log/*
 reports/*
 .env
-testdata/grafana/*
 testdata/prometheus/data/*
 testdata/redis/*
 testdata/influxdb/config/*
 testdata/influxdb/data/*
+testdata/grafana/dashboards/*
+testdata/grafana/provisioning/*
+testdata/grafana/data/*
 
 !testdata/prometheus/data/.gitkeep
 !testdata/influxdb/config/.gitkeep
 !testdata/influxdb/data/.gitkeep
 !log/.gitkeep
 !reports/.gitkeep
-!testdata/grafana/.gitkeep
 !testdata/grafana/dashboards/.gitkeep
 !testdata/grafana/provisioning/.gitkeep
 !testdata/grafana/data/.gitkeep
