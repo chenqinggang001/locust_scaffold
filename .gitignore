@@ -3,7 +3,6 @@ __pycache__/*
 .python-versions
 log/*
 reports/*
-.env
 testdata/prometheus/data/*
 testdata/redis/*
 testdata/influxdb/config/*
